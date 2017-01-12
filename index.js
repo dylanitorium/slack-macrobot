@@ -11,8 +11,8 @@ app.use('/gaf', (req, res) => {
   const id = req.params.text.trim();
   options.path += id;
   http.get(options, (getRes){
-  //   
-  // });
+  //
+  });
   res.json({
     "response_type": "in_channel",
     "text": id
