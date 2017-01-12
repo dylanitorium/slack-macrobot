@@ -19,7 +19,7 @@ app.use('/gaf', (req, res) => {
       console.log(error);
     })
     getRes.pipe(concat((data) => {
-      let $ = cheerio.load(data.toString())
+      const $ = cheerio.load(data.toString())
       res.json({
         "response_type": "in_channel",
         "text": $('title').text(),
