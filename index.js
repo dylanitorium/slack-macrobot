@@ -16,7 +16,7 @@ app.use('/gaf', (req, res) => {
     getRes.pipe(bl((err, data) => {
       res.json({
         "response_type": "in_channel",
-        "text": data.toString();
+        "text": data.toString(),
       });
     }));
   });
