@@ -1,7 +1,6 @@
 const express = require('express');
 const http = require('http');
 const concat = require('concat-stream')
-const cheerio = require('cheerio')
 
 const options = {
   host: 'www.neogaf.com',
@@ -11,8 +10,8 @@ const options = {
 const app = express();
 
 app.use('/macros', (req, res) => {
+  if (!req.query.text) return res.sendStatus(400);
   const item = req.query.text.trim();
-
   const fields = [
     'item_name',
     'item_id',
@@ -22,9 +21,8 @@ app.use('/macros', (req, res) => {
     'nf_protein',
     'nf_total_carbohydrate'
   ];
-
-  var path = '/v1_1/search/';
-  path += encodeURI(`${item}?fields=${fields.join(',')}`);
+  const base = '/v1_1/search/';
+  var path = base + encodeURI(`${item}?fields=${fields.join(',')}`);
   path += '&appId=38256e6d&appKey=66431bb4bbec110e138f0a677cad31f3';
 
   http.get({
@@ -35,12 +33,21 @@ app.use('/macros', (req, res) => {
       console.log(error);
     })
     getRes.pipe(concat((buf) => {
-      var data = JSON.parse(buf.toString()).hits[0].fields;
+      var hits = JSON.parse(buf.toString()).hits;
+
+      if (!hits.length) {
+        return res.json({
+          "response_type": "ephemeral",
+          "text": 'Couldn\'t find whatever weird thing you search for. You fucking weirdo',
+        });
+      }
+
+      var data = hits[0].fields;
       var message = `${data.item_name}(${data.brand_name})`;
       message += ` - ${data.nf_calories}cal / ${data.nf_protein}g (protein) /`
       message += ` ${data.nf_total_carbohydrate}g (carbs) / ${data.nf_total_fat}g (fat)`;
 
-      res.json({
+      return res.json({
         "response_type": "in_channel",
         "text": message,
       });
