@@ -2,7 +2,7 @@ const express = require('express');
 const http = require('http');
 const concat = require('concat-stream')
 const cheerio = require('cheerio')
-let $ = cheerio.load('<h2 class="title">Hello world</h2>')
+
 const options = {
   host: 'www.neogaf.com',
   path: '/forum/showthread.php?t='
