@@ -14,12 +14,17 @@ app.use('/macros', (req, res) => {
   const item = req.query.text.trim();
 
   const fields = [
-
+    'item_name',
+    'item_id',
+    'brand_name',
+    'nf_calories',
+    'nf_total_fat',
+    'nf_protein',
+    'nf_total_carbohydrate'
   ];
 
   var path = '/v1_1/search/';
-  path += encodeURI(item);
-  path += '?fields=item_name%2Citem_id%2Cbrand_name%2Cnf_calories%2Cnf_total_fat%2Cnf_protein%2Cnf_total_carbohydrate';
+  path += encodeURI(`${item}?fields=${fields.join(',')}`);
   path += '&appId=38256e6d&appKey=66431bb4bbec110e138f0a677cad31f3';
 
   http.get({
