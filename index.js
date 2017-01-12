@@ -1,17 +1,21 @@
 const express = require('express');
+const http = require('http');
+const options = {
+  host: 'www.neogaf.com',
+  path: '/forum/showthread.php?t='
+};
 
 const app = express();
 
 app.use('/gaf', (req, res) => {
-  console.log(req);
+  const id = req.params.text.trim();
+  options.path += id;
+  http.get(options, (getRes){
+  //   
+  // });
   res.json({
     "response_type": "in_channel",
-    "text": "It's 80 degrees right now.",
-    "attachments": [
-        {
-            "text":"Partly cloudy today and tomorrow"
-        }
-    ]
+    "text": id
 });
 });
 
