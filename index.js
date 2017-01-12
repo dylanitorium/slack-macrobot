@@ -9,14 +9,14 @@ const options = {
 const app = express();
 
 app.use('/gaf', (req, res) => {
-  const id = req.params.text.trim();
+  console.log(req);
+  const id = req.query.text.trim();
   options.path += id;
   http.get(options, (getRes) => {
-    console.log(getRes);
     getRes.pipe(bl((err, data) => {
       res.json({
         "response_type": "in_channel",
-        "text": id
+        "text": data.toString();
       });
     }));
   });
