@@ -1,6 +1,6 @@
 const express = require('express');
 const http = require('http');
-const bl = require('bl');
+const concat = require('concat-stream')
 const options = {
   host: 'www.neogaf.com',
   path: '/forum/showthread.php?t='
@@ -9,15 +9,19 @@ const options = {
 const app = express();
 
 app.use('/gaf', (req, res) => {
-  console.log(req);
   const id = req.query.text.trim();
   options.path += id;
+
   http.get(options, (getRes) => {
-    getRes.pipe(bl((err, data) => {
-      res.json({
-        "response_type": "in_channel",
-        "text": data.toString(),
-      });
+    getRes.on('error', (err) => {
+      console.log(error);
+    })
+    getRes.pipe(concat((data) => {
+      console.log(data.toString());
+      // res.json({
+      //   "response_type": "in_channel",
+      //   "text": data.toString(),
+      // });
     }));
   });
 });
