@@ -29,7 +29,7 @@ app.use('/macros', (req, res) => {
       var data = JSON.parse(buf.toString()).hits[0].fields;
       res.json({
         "response_type": "in_channel",
-        "text": `_${data.item_name}_(${data.brand_name}) - ${data.nf_calories}cal / ${data.nf_protein}g (protein) / ${data.nf_total_fat}g (total fat)`
+        "text": `${data.item_name}(${data.brand_name}) - ${data.nf_calories}cal / ${data.nf_protein}g (protein) / ${data.nf_total_fat}g (total fat)`
       });
     }));
   });
