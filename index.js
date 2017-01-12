@@ -4,7 +4,15 @@ const app = express();
 
 app.use('/gaf', (req, res) => {
   console.log(req);
-  res.send('hello');
+  res.json({
+    "response_type": "in_channel",
+    "text": "It's 80 degrees right now.",
+    "attachments": [
+        {
+            "text":"Partly cloudy today and tomorrow"
+        }
+    ]
+});
 });
 
 app.listen(8889, () => {
