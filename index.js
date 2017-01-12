@@ -46,12 +46,12 @@ app.use('/macros', (req, res) => {
         "text": `${data.item_name} - ${data.brand_name})`,
         "attachments": [
           {
-            "title": "Calories",
-            "text": data.nf_calories,
-            "color": "#ffbb55"
-          },
-          {
             "fields": [
+              {
+                "title": "Calories",
+                "value": data.nf_calories,
+                "short": true
+              },
               {
                 "title": "Protien (g)",
                 "value": data.nf_protein,
