@@ -1,6 +1,8 @@
 const express = require('express');
 const http = require('http');
 const concat = require('concat-stream')
+const cheerio = require('cheerio')
+let $ = cheerio.load('<h2 class="title">Hello world</h2>')
 const options = {
   host: 'www.neogaf.com',
   path: '/forum/showthread.php?t='
@@ -17,11 +19,11 @@ app.use('/gaf', (req, res) => {
       console.log(error);
     })
     getRes.pipe(concat((data) => {
-      console.log(data.toString());
-      // res.json({
-      //   "response_type": "in_channel",
-      //   "text": data.toString(),
-      // });
+      let $ = cheerio.load(data.toString())
+      res.json({
+        "response_type": "in_channel",
+        "text": $('title').text(),
+      });
     }));
   });
 });
