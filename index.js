@@ -12,9 +12,10 @@ const app = express();
 
 app.use('/gaf', (req, res) => {
   const id = req.query.text.trim();
-  options.path += id;
-
-  http.get(options, (getRes) => {
+  http.get({
+    host: 'www.neogaf.com',
+    path: `/forum/showthread.php?t=${id}`,
+  }, (getRes) => {
     getRes.on('error', (err) => {
       console.log(error);
     })
