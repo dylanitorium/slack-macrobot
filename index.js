@@ -43,7 +43,7 @@ app.use('/macros', (req, res) => {
       var data = hits[0].fields;
       return res.json({
         "response_type": "in_channel",
-        "text": `${data.item_name} - ${data.brand_name})`,
+        "text": `${data.item_name} - ${data.brand_name}`,
         "attachments": [
           {
             "fields": [
