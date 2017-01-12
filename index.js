@@ -33,7 +33,7 @@ app.use('/macros', (req, res) => {
       var data = JSON.parse(buf.toString()).hits[0].fields;
       var message = `${data.item_name}(${data.brand_name})`;
       message += ` - ${data.nf_calories}cal / ${data.nf_protein}g (protein) /`
-      message += ` ${data.nf_total_carbohydrates}g (carbs) / ${data.nf_total_fat}g (fat)`;
+      message += ` ${data.nf_total_carbohydrate}g (carbs) / ${data.nf_total_fat}g (fat)`;
 
       res.json({
         "response_type": "in_channel",
