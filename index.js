@@ -1,7 +1,12 @@
-var http = require('http');
-var fs = require('fs');
+const express = require('express');
 
+const app = express();
 
-http.createServer(function (req, res) {
+app.post('/gaf', (req, res) => {
   console.log(req);
-}).listen(8889);
+  res.send('hello');
+});
+
+app.listen(8889, () => {
+  console.log('listening');
+});
