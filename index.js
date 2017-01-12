@@ -2,7 +2,7 @@ const express = require('express');
 
 const app = express();
 
-app.post('/gaf', (req, res) => {
+app.use('/gaf', (req, res) => {
   console.log(req);
   res.send('hello');
 });
