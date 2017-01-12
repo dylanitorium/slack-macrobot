@@ -44,8 +44,11 @@ app.use('/macros', (req, res) => {
       console.log(error);
     })
     getRes.pipe(concat((data) => {
+      console.log(data);
       var data = data.toString();
-      data = data.hits[0].fields;
+      console.log(data);
+
+      // data = data.hits[0].fields;
       res.json({
         "response_type": "in_channel",
         "text": `${data.item_name}(${data.brand_name}) ${data.nf_calories}(cal) ${data.nf_total_fat}g(total fat)`
