@@ -22,6 +22,7 @@ app.use('/macros', (req, res) => {
     'nf_total_carbohydrate',
     'nf_serving_size_qty',
     'nf_serving_size_unit',
+    'nf_serving_weight_grams'
   ];
   const base = '/v1_1/search/';
   var path = base + encodeURI(`${item}?fields=${fields.join(',')}`);
@@ -51,7 +52,7 @@ app.use('/macros', (req, res) => {
             "fields": [
               {
                 "title": "Serving size",
-                "value": `${data.nf_serving_size_qty}${data.nf_serving_size_unit}`,
+                "value": `${data.nf_serving_size_qty}${data.nf_serving_size_unit} / ${data.nf_serving_weight_grams}g`,
                 "short": false
               },
               {
