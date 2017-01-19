@@ -53,7 +53,7 @@ app.use('/macros', (req, res) => {
                 "short": true
               },
               {
-                "title": "Protien (g)",
+                "title": "Protein (g) (you fucking happy mark?)",
                 "value": data.nf_protein,
                 "short": true
               },
