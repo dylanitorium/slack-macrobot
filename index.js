@@ -19,7 +19,9 @@ app.use('/macros', (req, res) => {
     'nf_calories',
     'nf_total_fat',
     'nf_protein',
-    'nf_total_carbohydrate'
+    'nf_total_carbohydrate',
+    'nf_serving_size_qty',
+    'nf_serving_size_unit',
   ];
   const base = '/v1_1/search/';
   var path = base + encodeURI(`${item}?fields=${fields.join(',')}`);
@@ -48,12 +50,17 @@ app.use('/macros', (req, res) => {
           {
             "fields": [
               {
+                "title": "Serving size",
+                "value": `${data.nf_serving_size_qty}${data.nf_serving_size_unit}`,
+                "short": false
+              },
+              {
                 "title": "Calories",
                 "value": data.nf_calories,
                 "short": true
               },
               {
-                "title": "Protein (g) (you fucking happy mark?)",
+                "title": "Protein (g)",
                 "value": data.nf_protein,
                 "short": true
               },
