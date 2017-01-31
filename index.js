@@ -1,15 +1,10 @@
 const express = require('express');
 const http = require('http');
-const concat = require('concat-stream')
-
-const options = {
-  host: 'www.neogaf.com',
-  path: '/forum/showthread.php?t='
-};
+const concat = require('concat-stream');
 
 const app = express();
 
-app.use('/macros', (req, res) => {
+app.use('/', (req, res) => {
   if (!req.query.text) return res.sendStatus(400);
   const item = req.query.text.trim();
   const fields = [
