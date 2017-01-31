@@ -40,7 +40,7 @@ app.use('/macros', (req, res) => {
       if (!hits.length) {
         return res.json({
           "response_type": "ephemeral",
-          "text": 'Couldn\'t find whatever weird thing you search for. You fucking weirdo',
+          "text": 'Couldn\'t find whatever weird thing you search for.',
         });
       }
       var data = hits[0].fields;
