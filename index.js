@@ -2,30 +2,41 @@ const express = require('express');
 const http = require('http');
 const concat = require('concat-stream');
 
+const APP_ID = process.env.APP_ID
+const BASE = '/v1_1/search/';
+const FIELDS = [
+  'item_name',
+  'item_id',
+  'brand_name',
+  'nf_calories',
+  'nf_total_fat',
+  'nf_protein',
+  'nf_total_carbohydrate',
+  'nf_serving_size_qty',
+  'nf_serving_size_unit',
+  'nf_serving_weight_grams'
+];
+
 const app = express();
 
-app.use('/', (req, res) => {
-  if (!req.query.text) return res.sendStatus(400);
-  const item = req.query.text.trim();
-  const fields = [
-    'item_name',
-    'item_id',
-    'brand_name',
-    'nf_calories',
-    'nf_total_fat',
-    'nf_protein',
-    'nf_total_carbohydrate',
-    'nf_serving_size_qty',
-    'nf_serving_size_unit',
-    'nf_serving_weight_grams'
-  ];
-  const base = '/v1_1/search/';
-  var path = base + encodeURI(`${item}?fields=${fields.join(',')}`);
-  path += '&appId=38256e6d&appKey=66431bb4bbec110e138f0a677cad31f3';
+const buildQuery = (query, fields) => (encodeURI(`${query}?fields=${fields.join(',')}`));
+
+const getPath = (query, base, fields, appId) => (
+  base + buildQuery(query.trim(), fields) + `&appId=${appId}`
+);
+
+const indexHandler = (req, res) => {
+  const {
+    query: {
+      text
+    }
+  } = req;
+
+  if (!text) return res.sendStatus(400);
 
   http.get({
     host: 'api.nutritionix.com',
-    path: path,
+    path: getPath(text, BASE, FIELDS, APP_ID),
   }, (getRes) => {
     getRes.on('error', (err) => {
       console.log(error);
@@ -77,7 +88,9 @@ app.use('/', (req, res) => {
       });
     }));
   });
-});
+}
+
+app.use('/', indexHander);
 app.listen(8889, () => {
   console.log('listening');
 });
