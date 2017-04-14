@@ -3,6 +3,7 @@ const http = require('http');
 const concat = require('concat-stream');
 
 const APP_ID = process.env.APP_ID
+const PORT = process.env.PORT || 8889;
 const BASE = '/v1_1/search/';
 const FIELDS = [
   'item_name',
@@ -91,6 +92,6 @@ const indexHandler = (req, res) => {
 }
 
 app.use('/', indexHander);
-app.listen(8889, () => {
-  console.log('listening');
+app.listen(PORT, () => {
+  console.log(`Listening on port ${PORT}`);
 });
